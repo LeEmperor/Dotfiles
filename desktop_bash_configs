@@ -1,0 +1,104 @@
+# export LM_LICENSE_FILE=$HOME/Downloads/LR-252603_License.dat
+# export LM_LICENSE_FILE=$HOME/Downloads/LR-254885_License.dat
+export SALT_LICENSE_SERVER=$HOME/FPGA/LR-267031_License.dat
+export LM_LICENSE_FILE=$HOME/FPGA/LR-267031_License.dat
+copy() {
+  # Define the path to the clipboard file
+  CLIPBOARD_FILE="/tmp/clipboard_files_list"
+
+  # Ensure the clipboard file exists
+  touch "$CLIPBOARD_FILE"
+
+  # Clear the clipboard file before copying new files
+  >"$CLIPBOARD_FILE"
+
+  # Iterate over all arguments (files/directories to copy)
+  for file in "$@"; do
+    # Check if the file exists
+    if [ -e "$file" ]; then
+      # Convert to absolute path and append to the clipboard file
+      readlink -f "$file" >>"$CLIPBOARD_FILE"
+    else
+      echo "Warning: '$file' does not exist and will be skipped."
+    fi
+  done
+
+  echo "Files copied to clipboard."
+}
+
+paste() {
+  # Define the path to the clipboard file
+  CLIPBOARD_FILE="/tmp/clipboard_files_list"
+
+  # Check if the clipboard file exists and is not empty
+  if [ ! -s "$CLIPBOARD_FILE" ]; then
+    echo "Clipboard is empty."
+    return 1
+  fi
+
+  # Set the destination directory to the current directory if not specified
+  dest="${1:-.}"
+
+  # Ensure the destination directory exists
+  if [ ! -d "$dest" ]; then
+    echo "Destination directory '$dest' does not exist."
+    return 1
+  fi
+
+  # Copy each file/directory listed in the clipboard file to the destination
+  while IFS= read -r file; do
+    if [ -e "$file" ]; then
+      cp -r "$file" "$dest"
+    else
+      echo "Warning: Source '$file' no longer exists."
+    fi
+  done <"$CLIPBOARD_FILE"
+
+  echo "Files pasted to '$dest'."
+
+  # Optionally, clear the clipboard after pasting
+  # Uncomment the following line if you want to clear the clipboard
+  # rm -f "$CLIPBOARD_FILE"
+}
+
+alias sb="source ~/.bashconfigs"
+alias die="exit"
+alias vim="/usr/bin/nvim-linux-x86_64/bin/nvim"
+alias kill="tmux kill-session"
+alias cbash="vim ~/.bashconfigs"
+
+alias lab1="cd ~/FPGA_stuff/rc1/lab1-LeEmperor"
+alias lab4="cd ~/FPGA_stuff/rc1/lab4"
+alias daphne="cd ~/FPGA/FinancialAccleration/nanoconda/dune_proj/bin/"
+# alias vsim="~/altera/24.1std/questa_fse/bin/vsim"
+alias q_pro="~/altera_pro/25.1.1/quartus/bin/quartus --64bit"
+alias bruh="cd /home/wayne/interview_prep"
+alias server="ssh bohdanpurtell@linux.ece.ufl.edu"
+alias update_desktop="update-desktop-database ~/.local/share/applications"
+alias ckit="vim ~/.config/kitty/kitty.conf"
+# alias questa="./altera/25.1std/questa_fse/bin/vsim"
+
+alias rc="cd ~/FPGA/final-project-final-project-group-79/dram_test/"
+alias server_rc="ssh bohdanpurtell@ece-b312-recon2.ad.ufl.edu"
+alias cnvim="vim ~/.config/nvim/init.lua"
+
+export PATH=/home/wayne/altera/21.1/questa_fse/bin:$PATH
+
+eval $(opam env)
+
+alias ocv="opam switch"
+
+dune_proj=dune_proj
+db () {
+  dune build
+}
+dr () {
+  clear
+  dune exec $dune_proj
+}
+set_current_proj () {
+  dune_proj="$1"
+}
+
+alias harn="cd ~/test_environs/ocaml_harn/dune_proj/"
+alias svivado="source ~/xilinx/Vivado/2021.2/settings64.sh"
