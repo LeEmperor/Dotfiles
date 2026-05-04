@@ -1,0 +1,41 @@
+format = '''
+(bold green)$directory$git_branch$python$time
+->> 
+'''
+scan_timeout = 10
+add_newline = false
+[git_branch]
+format = '[$branch(:$remote_branch)]($style)'
+[python]
+format = '[ $virtualenv]($style)'
+# jpk
+#
+# format = "$custom.fakehost $directory $character"
+#
+# [custom.fakehost]
+# command = "echo exchange1@us-southeast1"
+# when = "true"
+# shell = ["bash", "--noprofile", "--norc"]
+# format = "[$output]($style) "
+# style = "bold green"
+#
+# [username]
+# disabled = true
+#
+# [hostname]
+# disabled = true
+
+# format = "${custom.fakehost} $directory $character"
+#
+# [custom.fakehost]
+# command = "echo exchange1@us-southeast1"
+# when = "true"
+# shell = ["bash", "--noprofile", "--norc"]
+# format = "[$output]($style) "
+# style = "bold green"
+#
+# [username]
+# disabled = true
+#
+# [hostname]
+# disabled = true
