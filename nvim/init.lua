@@ -1,7 +1,6 @@
--- options
-vim.o.number = true
+-- vim.o.number = true
 vim.o.relativenumber = true
-vim.o.wrap = false
+vim.o.wrap = true
 vim.o.tabstop = 2
 vim.o.swapfile = false
 vim.g.mapleader = " "
@@ -19,7 +18,10 @@ vim.o.mouse = ''
 vim.o.timeoutlen = 400
 vim.o.undofile = true
 vim.o.cursorline = true
--- vim.o.termguicolors = true
+
+-- colors
+vim.o.termguicolors = true
+vim.o.background = "light"
 
 -- keybinds
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>') -- update 
@@ -29,6 +31,9 @@ vim.keymap.set('t', '<leader>q', ':quit<CR>') -- quit
 vim.keymap.set('i', 'jk', '<ESC>') -- norm mode entrance
 vim.keymap.set('t', 'jk', '<C-\\><C-n>') -- norm mode entrance
 vim.keymap.set('n', '<C-c>', "<cmd> %y+ <CR>") -- copy whole filecontent
+-- vim.keymap.set('n', 'bv', '<C-v>') -- visual block selècter
+-- vim.keymap.set('t', 'bv', '<C-v>')
+-- vim.keymap.set('v', 'bv', '<C-v>')
 vim.keymap.set('n', 'j', 'gj') -- wrap line moves
 vim.keymap.set('n', 'k', 'gk')
 
@@ -64,9 +69,10 @@ vim.pack.add({
   { src = "https://github.com/nvim-telescope/telescope.nvim"}, -- searcher two
   { src = "https://github.com/rmagatti/goto-preview"}, 
   { src = "https://github.com/sphamba/smear-cursor.nvim"}, 
-  -- { src = "https://github.com/nvimdev/lspsaga.nvim"},
-  -- { src = "https://github.com/christoomey/vim-tmux-navigator"},
-  -- { src = "https://github.com/"},
+  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim"},
+  { src = "https://github.com/xiyaowong/transparent.nvim"},
+  { src = "https://github.com/hudson-trading/slang-server.nvim"},
+  { src = "https://github.com/maxmx03/solarized.nvim"},
 })
 
 require("nvim-tree").setup()
@@ -78,6 +84,7 @@ require("fzf-lua").setup({'telescope'})
 -- require("").setup()
 -- require("").setup()
 
+vim.cmd("packadd nvim-treesitter")
 local cmp = require("cmp")
 
 -- set completion sources 
@@ -108,44 +115,31 @@ cmp.setup({
 })
 
 -- C/C++ Semantics
--- vim.lsp.config["clangd"] = {
---   capabilities = capabilities,
---   on_attach = on_attach,
--- }
+vim.lsp.config["clangd"] = {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = { vim.fn.expand("/usr/bin/clangd-22") },
+}
+vim.lsp.enable('clangd')
 
--- vim.lsp.config["ocaml-lsp"] = {
---   Command = "/home/wave/.opam/hardcaml_4XX/bin/ocamllsp",
---   capabilities = capabilities,
---   on_attach = on_attach,
--- }
+-- localucwd = require("unified_cwd")
+-- vim.keymap.set("n", "<leader>sd", ucwd.save, { desc = "Save cwd (shared with bash)" })
+-- vim.keymap.set("n", "<leader>gd", ucwd.save, { desc = "Go to saved cwd(shared with bash)" })
 
--- vim.lsp.config["ocaml-lsp"] = {
---   cmd = "/home/wave/.opam/hardcaml_4XX/bin/ocamllsp",
---   -- capabilities = capabilities,
---   -- on_attach = on_attach,
--- }
+vim.lsp.config("slang-server", {
+  cmd = { "/home/wayne/slang-server/build/bin/slang-server" },
+  root_markers = { ".git", ".slang" },
+  filetypes = { "systemverilog", "verilog" },
+})
+vim.lsp.enable("slang-server")
 
--- vim.lsp.start(vim.lsp.config["clangd"])
--- vim.lsp.log.set_level("ERROR")
-
--- vim.lsp.config("slang-server", {
---   cmd = "slang-server",
---   root_markers = {".git", ".slang"},
---   filetypes = {
---     "systemverilog",
---     "verilog",
---   },
--- })
-
--- vim.lsp.enable("ocaml-lsp")
-
--- init.lua
 vim.opt.backupcopy = "yes"      -- avoid rename-on-save weirdness
 vim.keymap.set("n", "<leader>W", "<cmd>noautocmd write!<cr>", { silent = true, desc = "Force save (overwrite external changes)" })
-
+-- vim.lsp.enable("ocaml-lsp")
 
 vim.lsp.config('ocamllsp', {
-  cmd = { vim.fn.expand("~/.opam/ocaml_5XX/bin/ocamllsp") },
+  -- cmd = { vim.fn.expand("~/.opam/5.4.0/bin/ocamllsp") },
+  cmd = { vim.fn.expand("~/.opam/5.2.0+ox/bin/ocamllsp") },
 
   -- If you still have nvim-lspconfig installed, you can actually omit these,
   -- because its ocamllsp config will be merged in. But it doesn't hurt to be explicit.
@@ -165,13 +159,7 @@ vim.lsp.config('ocamllsp', {
   -- You can keep using it for now if you want:
   on_attach = on_attach,
 })
-
-require("nvim-treesitter").setup(
-  {
-    ensure_installed = { "ocaml", "ocaml_interface" },
-    highlight = {enable = true},
-  }
-)
+vim.lsp.enable('ocamllsp')
 
 require("smear_cursor").setup(
   {
@@ -185,14 +173,41 @@ require("smear_cursor").setup(
     gradient_exponent = 0,
   }
 )
--- require('tree-sitter-ocaml').ocaml
--- require('tree-sitter-ocaml').ocaml_interface
--- require('tree-sitter-ocaml').ocaml_type
--- Actually turn it on:
-vim.cmd("syntax off")
-vim.lsp.enable('ocamllsp')
 
-vim.cmd [[colorscheme industry]]
--- vim.api.nvim_set_hl(0, "@lsp.type.function", { link = "@function" })
--- vim.api.nvim_set_hl(0, "@lsp.type.variable", { link = "@variable" })
--- vim.api.nvim_set_hl(0, "@lsp.type.type",     { link = "@type" })
+require("nvim-treesitter").setup(
+  {
+    ensure_installed = { "ocaml", "ocaml_interface" },
+    highlight = {enable = true},
+  }
+)
+
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- vim.cmd [[colorscheme solarized]]
+vim.cmd [[colorscheme koehler]]
+
+vim.lsp.config('pyright', {
+  -- config
+})
+
+-- Competitive programming runner
+local function cp_run()
+  local src  = vim.fn.expand('%:t')
+  local dir  = vim.fn.expand('%:p:h')
+
+  vim.cmd('write')
+
+  vim.fn.jobstart({ 'bash', dir .. '/build.sh', src, 'input.txt', 'output.txt' }, {
+    cwd = dir,
+    on_exit = function(_, code)
+      if code ~= 0 then
+        vim.notify('Build failed', vim.log.levels.ERROR)
+      else
+        vim.notify('Done', vim.log.levels.INFO)
+      end
+    end,
+  })
+end
+vim.keymap.set('n', '<leader>d', cp_run, { desc = 'CP: compile and run' })
+

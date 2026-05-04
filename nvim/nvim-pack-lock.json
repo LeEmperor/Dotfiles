@@ -1,0 +1,84 @@
+{
+  "plugins": {
+    "cmp-buffer": {
+      "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
+      "src": "https://github.com/hrsh7th/cmp-buffer"
+    },
+    "cmp-nvim-lsp": {
+      "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
+      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
+    },
+    "cmp-path": {
+      "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
+    "fzf-lua": {
+      "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "goto-preview": {
+      "rev": "d2d6923c9b9e0e43f0b9b566f261a8b1ae016540",
+      "src": "https://github.com/rmagatti/goto-preview"
+    },
+    "mason-lspconfig.nvim": {
+      "rev": "25f609e7fca78af7cede4f9fa3af8a94b1c4950b",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason.nvim": {
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "nvim-cmp": {
+      "rev": "a1d504892f2bc56c2e79b65c6faded2fd21f3eca",
+      "src": "https://github.com/hrsh7th/nvim-cmp"
+    },
+    "nvim-lspconfig": {
+      "rev": "a776085e04f7b15d0b59fae2244df07d98360ab4",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-tree.lua": {
+      "rev": "31503ad5d869fca61461d82a9126f62480ecb0ab",
+      "src": "https://github.com/nvim-tree/nvim-tree.lua"
+    },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "687de727de91a63b0bff9cff4e71d73f9d40fa77",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "slang-server.nvim": {
+      "rev": "edb99dff928bed4dc1d35a6a14e93e9526e50543",
+      "src": "https://github.com/hudson-trading/slang-server.nvim"
+    },
+    "smear-cursor.nvim": {
+      "rev": "c85bdbb25db096fbcf616bc4e1357bd61fe2c199",
+      "src": "https://github.com/sphamba/smear-cursor.nvim"
+    },
+    "solarized-osaka.nvim": {
+      "rev": "f0c2f0ba0bd56108d53c9bfae4bb28ff6c67bbdb",
+      "src": "https://github.com/craftzdog/solarized-osaka.nvim"
+    },
+    "solarized.nvim": {
+      "rev": "c0dfe1cbfabd93b546baf5f1408f5df7e02e2050",
+      "src": "https://github.com/maxmx03/solarized.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "cfb85dcf7f822b79224e9e6aef9e8c794211b20b",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "transparent.nvim": {
+      "rev": "8ac59883de84e9cd1850ea25cf087031c5ba7d54",
+      "src": "https://github.com/xiyaowong/transparent.nvim"
+    },
+    "trouble.nvim": {
+      "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
+      "src": "https://github.com/folke/trouble.nvim"
+    }
+  }
+}
