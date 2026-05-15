@@ -207,9 +207,9 @@ bindsym $mod+Control+Down   resize grow height 10 px or 10 ppt
 default_border pixel 0
 exec_always --no-startup-id setxkbmap -option caps:super
 
-exec_always --no-startup-id feh --bg-fill /home/wayne/Pictures/mr_spirit.jpg
-exec_always --no-startup-id picom
-exec --no-startup-id nm-applet
+# exec_always --no-startup-id feh --bg-fill /home/wayne/Pictures/mr_spirit.jpg
+# exec_always --no-startup-id picom
+# exec --no-startup-id nm-applet
 
 #bsdindsym $mod+space focus mode_toggle
 # bindsym $mod+del exec NOW=$(date +%d-%b-%Y_%H-%M-%S) && maim --format png --select > ~/Pictures/screenshot_$NOW.png && xclip -selection clip -t image/png ~/Pictures/screenshot_$NOW.png

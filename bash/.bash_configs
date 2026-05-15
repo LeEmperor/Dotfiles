@@ -16,15 +16,39 @@ alias questa="/home/wayne/altera/25.1std/questa_fse/bin/vsim"
 alias vivado="/home/wayne/tools/xilinx/2025.2.1/Vivado/bin/vivado"
 alias sta="git status"
 alias gd="git diff"
+alias gds="git diff --staged"
 alias listen="minicom -b 115200 -D /dev/ttyUSB1"
 alias ..="cd ../"
 alias ....="cd ../../.."
 alias ......="cd ../../../.."
+alias home_server="ssh rem-access@us-southeast1-access"
 alias ts="tailscale status"
+alias tsr="sudo systemctl restart tailscaled"
+alias sa="source ./env.sh"
 
 # alias bruh="dune exec ./rx_byte_assembler_tb.exe"
 # alias bruh="dune exec ./rx_datapath_tb.exe"
-alias bruh="dune exec ./rx_mac_top_tb.exe"
+# alias bruh="dune exec ./rx_mac_top_tb.exe"
+# alias bruh="bazel run //lib:mii"
+alias send="sudo python3 send_test_frames.py"
+alias comp="db && dune exec ./generate.exe"
+# alias bruh="bazel run //test/mii:rx_mac_top_tb"
+alias bruh="bazel run //test/mii:tx_byte_disassembler_tb"
+# alias bruh="bazel run //lib:uart"
+
+# alias bruh="bazel run //test/uart:tx_uart_top_tb"
+# alias bruh2="bazel run //lib/common:generate"
+
+alias link_setup="\
+  sudo ip link set enx9cebe8ed31d2 up &&
+  nmcli device set enx9cebe8ed31d2 managed no &&
+  sudo ip link set enx9cebe8ed31d2 multicast off &&
+  sudo sysctl -w net.ipv6.conf.enx9cebe8ed31d2.disable_ipv6=1 &&
+  sudo sysctl -w net.ipv4.conf.enx9cebe8ed31d2.arp_ignore=0 &&
+  sudo sysctl -w net.ipv4.conf.enx9cebe8ed31d2.arp_announce=2 
+"
+
+alias nomac="/usr/NX/bin/nxplayer"
 
 dune_proj=dune_proj
 db () {
@@ -44,8 +68,12 @@ set_current_proj () {
 eval "$(starship init bash)"
 alias gdie="gnome-session-quit --logout --no-prompt"
 alias mouse="./dump/touchpad-toggle"
+# alias rc_server="ssh bohdanpurtell@ece-b312-recon2.ad.ufl.edu"
+alias rc_server="ssh bohdanpurtell@ece-lnx-10.ad.ufl.edu"
 
 export SALT_LICENSE_SERVER=$HOME/FPGA/licenses/LR-266824_License.dat
+alias mount_ece="sshfs bohdanpurtell@linux.ece.ufl.edu:/home/UFAD/bohdanpurtell/quartus_junk ~/ece"
+alias unmount_ece="fusermount -u ~/ece"
 # alias vivado="/tools/Xilinx/Vivado/2021.2/bin/vivado"
 
 alias vpn="/opt/cisco/secureclient/bin/vpnui"
@@ -112,3 +140,8 @@ paste() {
 }
 
 alias cpharness='cp -r /home/wayne/CompetitiveProgramming/quick_harn/. .'
+
+alias mc="env __NV_PRIME_RENDER_OFFLOAD=1 \
+    __GLX_VENDOR_LIBRARY_NAME=nvidia \
+    __VK_LAYER_NV_optimus=NVIDIA_only \
+    ModrinthApp"

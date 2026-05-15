@@ -21,7 +21,9 @@ vim.o.cursorline = true
 
 -- colors
 vim.o.termguicolors = true
-vim.o.background = "light"
+-- vim.o.background = "light"
+vim.o.background = "dark"
+vim.cmd [[colorscheme catppuccin]]
 
 -- keybinds
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>') -- update 
@@ -73,6 +75,18 @@ vim.pack.add({
   { src = "https://github.com/xiyaowong/transparent.nvim"},
   { src = "https://github.com/hudson-trading/slang-server.nvim"},
   { src = "https://github.com/maxmx03/solarized.nvim"},
+  { src = "https://github.com/romgrk/barbar.nvim"},
+  { src = "https://github.com/nvim-tree/nvim-web-devicons"},
+  { src = "https://github.com/chentoast/marks.nvim"},
+  { src = "https://github.com/akinsho/toggleterm.nvim"},
+
+  -- { src = "https://github.com/"},
+  -- { src = "https://github.com/"},
+  -- { src = "https://github.com/"},
+  -- { src = ""},
+  -- { src = ""},
+  -- { src = ""},
+
 })
 
 require("nvim-tree").setup()
@@ -181,11 +195,15 @@ require("nvim-treesitter").setup(
   }
 )
 
+require("toggleterm").setup{
+  size = 20,
+  open_mapping = [[<leader>/]],
+  direction = 'float',
+  shade_terminals = true,
+}
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
--- vim.cmd [[colorscheme solarized]]
-vim.cmd [[colorscheme koehler]]
 
 vim.lsp.config('pyright', {
   -- config
@@ -209,5 +227,42 @@ local function cp_run()
     end,
   })
 end
+
 vim.keymap.set('n', '<leader>d', cp_run, { desc = 'CP: compile and run' })
 
+vim.keymap.set("n", "<leader>h", "<Cmd>BufferPrevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>l", "<Cmd>BufferNext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>n", "<Cmd>enew<CR>", { desc = "New buffer" })
+vim.keymap.set("n", "<leader>x", "<Cmd>BufferClose<CR>", { desc = "Close buffer" })
+
+vim.opt.signcolumn = "yes"
+
+vim.keymap.set("n", "<leader>sm", function()
+  require("telescope.builtin").marks()
+end, {
+  desc = "Show marks",
+})
+
+vim.keymap.set("n", "<leader>sc", function()
+  vim.cmd("source " .. vim.fn.stdpath("config") .. "/init.lua")
+  vim.notify("Reloaded init.lua")
+end, { desc = "Source init.lua" })
+
+vim.keymap.set("n", "<leader>ec", function()
+  vim.cmd("edit" .. vim.fn.stdpath("config") .. "/init.lua")
+end, {desc = "Edit init.lua" })
+
+vim.keymap.set("n", "<leader>eb", function()
+  vim.cmd("edit" .. vim.fn.expand("~/.bash_configs"))
+end, {desc = "Edit bash_configs" })
+
+local function confirm_quit()
+  local choice = vim.fn.confirm("Quit Neovim?", "&Yes\n&No", 2)
+  if choice == 1 then
+    vim.cmd("qall")
+  end
+end
+
+vim.keymap.set("n", "<leader>q", confirm_quit, { desc = "Confirm Quit" })
+vim.keymap.set("n", ":q", confirm_quit, { silent = false })
+--vim.keymap.set("n", "<leader>Q", vim.cmd("qall"), { desc = "Full quit force" })
