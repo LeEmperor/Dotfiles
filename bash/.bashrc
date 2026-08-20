@@ -116,5 +116,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source ~/.bash_configs
 export PATH="$HOME/.local/bin:$PATH"
+source ~/.bash_configs
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+
+# local::lib uses these paths for user-installed Perl modules.
+export PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
+export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base $HOME/perl5"
+export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"

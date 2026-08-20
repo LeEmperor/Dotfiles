@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 
+# Private endpoints, hardware IDs, license paths, and machine-only tool
+# locations belong here. This file intentionally lives outside the repository.
+if [[ -f $HOME/.bash_configs.local ]]; then
+  source "$HOME/.bash_configs.local"
+fi
+
 alias sb="source ~/.bash_configs"
 alias die="exit"
-alias vim="/usr/local/bin/nvim-linux-x86_64/bin/nvim"
+if [[ -n ${NVIM_BIN:-} && -x $NVIM_BIN ]]; then
+  alias vim="$NVIM_BIN"
+elif command -v nvim >/dev/null 2>&1; then
+  alias vim="nvim"
+fi
 alias kill="tmux kill-session"
 alias cbash="vim ~/.bash_configs"
 alias ci3="vim ~/.config/i3/config"
@@ -10,10 +20,24 @@ alias cstar="vim ~/.config/starship.toml"
 alias cghost="vim ~/.config/ghostty/config.ghostty"
 alias ocv="opam switch"
 alias cvim="vim ~/.config/nvim/init.lua"
-alias clang++="/usr/bin/clang++-22"
-alias sa="source aliases"
-alias questa="/home/wayne/altera/25.1std/questa_fse/bin/vsim"
-alias vivado="/home/wayne/tools/xilinx/2025.2.1/Vivado/bin/vivado"
+if [[ -x /usr/bin/clang++-23 ]]; then
+  alias clang++="/usr/bin/clang++-23"
+fi
+if [[ -x $HOME/altera/25.1std/questa_fse/bin/vsim ]]; then
+  alias questa="$HOME/altera/25.1std/questa_fse/bin/vsim"
+fi
+if [[ -x $HOME/tools/xilinx/vivado25_install/2025.2.1/Vivado/bin/vivado ]]; then
+  alias vivado="$HOME/tools/xilinx/vivado25_install/2025.2.1/Vivado/bin/vivado"
+fi
+if [[ -x $HOME/bin/cmake-4.3.2-linux-x86_64/bin/cmake ]]; then
+  alias cmake="$HOME/bin/cmake-4.3.2-linux-x86_64/bin/cmake"
+fi
+if [[ -x $HOME/surfer_linux/surfer ]]; then
+  alias surfer="$HOME/surfer_linux/surfer"
+fi
+if [[ -x $HOME/dump/verilator/bin/verilator ]]; then
+  alias verilator="$HOME/dump/verilator/bin/verilator"
+fi
 alias sta="git status"
 alias gd="git diff"
 alias gds="git diff --staged"
@@ -21,32 +45,35 @@ alias listen="minicom -b 115200 -D /dev/ttyUSB1"
 alias ..="cd ../"
 alias ....="cd ../../.."
 alias ......="cd ../../../.."
-alias home_server="ssh rem-access@us-southeast1-access"
 alias ts="tailscale status"
 alias tsr="sudo systemctl restart tailscaled"
 alias sa="source ./env.sh"
-
-# alias bruh="dune exec ./rx_byte_assembler_tb.exe"
-# alias bruh="dune exec ./rx_datapath_tb.exe"
-# alias bruh="dune exec ./rx_mac_top_tb.exe"
-# alias bruh="bazel run //lib:mii"
+alias dsync="~/.config/emacs/bin/doom sync"
+alias bruh='dune exec "$HOME/devel/shaw/molecular-dynamics/molecular_rendering/_build/default/bin/main.exe"'
+alias gen="dune exec _build/default/lib/common/generate.exe"
 alias send="sudo python3 send_test_frames.py"
-alias comp="db && dune exec ./generate.exe"
-# alias bruh="bazel run //test/mii:rx_mac_top_tb"
-alias bruh="bazel run //test/mii:tx_byte_disassembler_tb"
-# alias bruh="bazel run //lib:uart"
+alias comp="db && dune exec ./_build/default/lib/common/generate.exe"
+alias bright-set="sudo brightnessctl --class=backlight set"
 
-# alias bruh="bazel run //test/uart:tx_uart_top_tb"
-# alias bruh2="bazel run //lib/common:generate"
-
-alias link_setup="\
-  sudo ip link set enx9cebe8ed31d2 up &&
-  nmcli device set enx9cebe8ed31d2 managed no &&
-  sudo ip link set enx9cebe8ed31d2 multicast off &&
-  sudo sysctl -w net.ipv6.conf.enx9cebe8ed31d2.disable_ipv6=1 &&
-  sudo sysctl -w net.ipv4.conf.enx9cebe8ed31d2.arp_ignore=0 &&
-  sudo sysctl -w net.ipv4.conf.enx9cebe8ed31d2.arp_announce=2 
+alias monitor="xrandr \
+  --output eDP-1 --mode 1920x1200 --primary \
+  --output HDMI-1 --mode 2560x1440 --rate 120 --right-of eDP-1
 "
+alias unmonitor="xrandr --output HDMI-1 --off"
+
+link_setup() {
+  if [[ -z ${LINK_INTERFACE:-} ]]; then
+    echo "Set LINK_INTERFACE in ~/.bash_configs.local first."
+    return 1
+  fi
+
+  sudo ip link set "$LINK_INTERFACE" up &&
+    nmcli device set "$LINK_INTERFACE" managed no &&
+    sudo ip link set "$LINK_INTERFACE" multicast off &&
+    sudo sysctl -w "net.ipv6.conf.$LINK_INTERFACE.disable_ipv6=1" &&
+    sudo sysctl -w "net.ipv4.conf.$LINK_INTERFACE.arp_ignore=0" &&
+    sudo sysctl -w "net.ipv4.conf.$LINK_INTERFACE.arp_announce=2"
+}
 
 alias nomac="/usr/NX/bin/nxplayer"
 
@@ -65,20 +92,15 @@ set_current_proj () {
   dune_proj="$1"
 }
 
-eval "$(starship init bash)"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi
 alias gdie="gnome-session-quit --logout --no-prompt"
 alias mouse="./dump/touchpad-toggle"
-# alias rc_server="ssh bohdanpurtell@ece-b312-recon2.ad.ufl.edu"
-alias rc_server="ssh bohdanpurtell@ece-lnx-10.ad.ufl.edu"
 
-export SALT_LICENSE_SERVER=$HOME/FPGA/licenses/LR-266824_License.dat
-alias mount_ece="sshfs bohdanpurtell@linux.ece.ufl.edu:/home/UFAD/bohdanpurtell/quartus_junk ~/ece"
-alias unmount_ece="fusermount -u ~/ece"
-# alias vivado="/tools/Xilinx/Vivado/2021.2/bin/vivado"
-
-alias vpn="/opt/cisco/secureclient/bin/vpnui"
-
-eval $(opam env)
+if command -v opam >/dev/null 2>&1; then
+  eval "$(opam env)"
+fi
 
 copy() {
   # Define the path to the clipboard file
@@ -139,9 +161,58 @@ paste() {
   # rm -f "$CLIPBOARD_FILE"
 }
 
-alias cpharness='cp -r /home/wayne/CompetitiveProgramming/quick_harn/. .'
+alias cpharness='cp -r "$HOME/CompetitiveProgramming/quick_harn/." .'
 
 alias mc="env __NV_PRIME_RENDER_OFFLOAD=1 \
     __GLX_VENDOR_LIBRARY_NAME=nvidia \
     __VK_LAYER_NV_optimus=NVIDIA_only \
     ModrinthApp"
+
+blackbox_mount() {
+  if [[ -z ${BLACKBOX_DEVICE_UUID:-} ]]; then
+    echo "Set BLACKBOX_DEVICE_UUID in ~/.bash_configs.local first."
+    return 1
+  fi
+
+  local device="/dev/disk/by-uuid/$BLACKBOX_DEVICE_UUID"
+  if [[ ! -b "$device" ]]; then
+    echo "Blackbox SSD is not connected."
+    return 1
+  fi
+
+  if findmnt -rn --source "$device" >/dev/null; then
+    echo "Blackbox is already mounted."
+    return 0
+  fi
+
+  udisksctl mount -b "$device"
+}
+
+blackbox_unmount() {
+  if [[ -z ${BLACKBOX_DEVICE_UUID:-} ]]; then
+    echo "Set BLACKBOX_DEVICE_UUID in ~/.bash_configs.local first."
+    return 1
+  fi
+
+  local device="/dev/disk/by-uuid/$BLACKBOX_DEVICE_UUID"
+  local target
+  local physical_dir
+
+  if [[ ! -b "$device" ]]; then
+    echo "Blackbox SSD is not connected."
+    return 1
+  fi
+
+  target="$(findmnt -rn -S "$device" -o TARGET)"
+  if [[ -z "$target" ]]; then
+    echo "Blackbox is already unmounted."
+    return 0
+  fi
+
+  physical_dir="$(pwd -P)"
+  if [[ "$physical_dir" == "$target" || "$physical_dir" == "$target/"* ]]; then
+    cd "$HOME" || return 1
+  fi
+
+  udisksctl unmount -b "$device" && echo "Blackbox is safe to unplug."
+}

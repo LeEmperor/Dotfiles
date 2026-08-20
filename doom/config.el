@@ -376,12 +376,19 @@ from Dired, simply kill that Dired buffer instead of reopening it."
 ;; `verilog-mode' for both, so identify the language as SystemVerilog (which is
 ;; also a superset of Verilog) when speaking to the server.
 (after! eglot
-  (add-to-list
-   'eglot-server-programs
-   '((verilog-mode :language-id "systemverilog")
-     . ("/home/wayne/slang-server/build/bin/slang-server"))))
-
-(add-hook 'verilog-mode-hook #'eglot-ensure)
+  (let* ((configured-server (getenv "SLANG_SERVER"))
+         (local-build (expand-file-name "~/slang-server/build/bin/slang-server"))
+         (server (cond
+                  ((and configured-server
+                        (file-executable-p configured-server))
+                   configured-server)
+                  ((executable-find "slang-server"))
+                  ((file-executable-p local-build) local-build))))
+    (when server
+      (add-to-list
+       'eglot-server-programs
+       `((verilog-mode :language-id "systemverilog") . (,server)))
+      (add-hook 'verilog-mode-hook #'eglot-ensure))))
 
 (defun my/toggle-lsp-diagnostics ()
   "Toggle the Flycheck diagnostics list in its bottom window."

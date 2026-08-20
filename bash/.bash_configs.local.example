@@ -1,0 +1,19 @@
+# Copy this file to ~/.bash_configs.local and fill in only what this machine
+# needs. Keep the real file out of the dotfiles repository.
+
+# Custom binaries that are not available on PATH:
+# export NVIM_BIN="$HOME/path/to/nvim"
+# alias questa="$HOME/path/to/questa/bin/vsim"
+# alias vivado="$HOME/path/to/Vivado/bin/vivado"
+
+# LSP override shared by Neovim and Doom Emacs:
+# export SLANG_SERVER="$HOME/path/to/slang-server"
+
+# Hardware- and license-specific values:
+# export LINK_INTERFACE="your-interface-name"
+# export BLACKBOX_DEVICE_UUID="your-device-uuid"
+# export SALT_LICENSE_SERVER="$HOME/path/to/license.dat"
+
+# Private services:
+# alias home_server="ssh user@host"
+# alias mount_remote="sshfs user@host:/remote/path ~/mountpoint"
