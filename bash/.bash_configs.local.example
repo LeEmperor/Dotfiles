@@ -17,3 +17,7 @@
 # Private services:
 # alias home_server="ssh user@host"
 # alias mount_remote="sshfs user@host:/remote/path ~/mountpoint"
+# alias server="ssh user@host"
+# alias rc_server="ssh user@host"
+# alias hiper_login="ssh user@host"
+# alias unmount_remote="fusermount -u ~/mountpoint"

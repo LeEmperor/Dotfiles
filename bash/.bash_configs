@@ -55,11 +55,17 @@ alias send="sudo python3 send_test_frames.py"
 alias comp="db && dune exec ./_build/default/lib/common/generate.exe"
 alias bright-set="sudo brightnessctl --class=backlight set"
 
-alias monitor="xrandr \
-  --output eDP-1 --mode 1920x1200 --primary \
-  --output HDMI-1 --mode 2560x1440 --rate 120 --right-of eDP-1
-"
-alias unmonitor="xrandr --output HDMI-1 --off"
+monitor() {
+  xrandr \
+    --output eDP-1 --auto --primary \
+    --output HDMI-1 --auto --right-of eDP-1
+}
+
+unmonitor() {
+  xrandr \
+    --output HDMI-1 --off \
+    --output eDP-1 --auto --primary
+}
 
 link_setup() {
   if [[ -z ${LINK_INTERFACE:-} ]]; then
@@ -216,3 +222,11 @@ blackbox_unmount() {
 
   udisksctl unmount -b "$device" && echo "Blackbox is safe to unplug."
 }
+
+if [[ -x /opt/cisco/secureclient/bin/vpnui ]]; then
+  alias vpn="/opt/cisco/secureclient/bin/vpnui"
+fi
+
+alias astro_start1="npx astro dev --background"   # live-reload server
+alias astro_start2="npm run build"                # static output -> dist/
+alias astro_start3="npm run preview"              # serve dist/ as in production

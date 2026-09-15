@@ -1,0 +1,29 @@
+# i3blocks config
+
+[wireless]
+command=iw dev | awk '$1=="ssid"{print "W: " $2}' || echo "W: down"
+interval=10
+
+[ethernet]
+command=ip -o -4 addr show scope global | awk '!/wl/ {print "E: " $4; exit}' || echo "E: down"
+interval=10
+
+[battery]
+command=~/.config/i3/scripts/battery.sh
+interval=10
+
+# [disk]
+# command=df -h / | awk 'NR==2 {print "Disk: " $4 " free"}'
+# interval=30
+
+[load]
+command=awk '{print "Load: " $1}' /proc/loadavg
+interval=5
+
+[memory]
+command=free -h | awk '/Mem:/ {print "Mem: " $3 " | " $7}'
+interval=5
+
+[time]
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
