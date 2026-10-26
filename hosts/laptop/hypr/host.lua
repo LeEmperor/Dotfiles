@@ -1,0 +1,3 @@
+-- host.lua (laptop): hybrid graphics — leave GPU selection to the driver.
+-- If Hyprland runs on the NVIDIA GPU here, copy the env lines from
+-- hosts/desktop/hypr/host.lua.

@@ -1,0 +1,38 @@
+// Waybar for Hyprland — stands in for the i3blocks bar
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 26,
+    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "clock", "tray"],
+
+    "hyprland/workspaces": {
+        "all-outputs": false
+    },
+    "hyprland/window": {
+        "max-length": 80
+    },
+    "pulseaudio": {
+        "format": "VOL {volume}%",
+        "format-muted": "VOL muted",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    "network": {
+        "format-ethernet": "{ipaddr}",
+        "format-wifi": "{essid} {signalStrength}%",
+        "format-disconnected": "offline"
+    },
+    "cpu": {
+        "format": "CPU {usage}%"
+    },
+    "memory": {
+        "format": "MEM {percentage}%"
+    },
+    "clock": {
+        "format": "{:%a %Y-%m-%d %H:%M}"
+    },
+    "tray": {
+        "spacing": 10
+    }
+}

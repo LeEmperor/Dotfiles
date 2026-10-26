@@ -1,0 +1,2 @@
+# desktop: transparency over the wallpaper; Hyprland handles blur
+background-opacity = 0.85

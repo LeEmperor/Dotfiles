@@ -1,0 +1,17 @@
+window-decoration=false
+background=#000000
+window-width = 9999
+window-height = 9999
+window-padding-x = 12
+window-padding-y = 5
+window-padding-balance = true
+font-size = 12
+
+# Ctrl+Backspace -> delete previous word (^W) instead of ^H, which tmux binds to previous-window
+keybind = ctrl+backspace=text:\x17
+
+# Ctrl+V pastes from the local clipboard (so Wispr Flow auto-paste works over ssh/tmux)
+keybind = ctrl+v=paste_from_clipboard
+
+# Per-machine look (opacity/blur), deployed from hosts/<name>/ghostty/host.ghostty
+config-file = ?host.ghostty

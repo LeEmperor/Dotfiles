@@ -1,0 +1,22 @@
+# ~/.bash_configs.host (laptop) — sourced by ~/.bash_configs
+
+alias bright-set="sudo brightnessctl --class=backlight set"
+
+# i3/X11 external monitor helpers (Hyprland handles hotplug on its own)
+monitor() {
+  xrandr \
+    --output eDP-1 --auto --primary \
+    --output HDMI-1 --auto --right-of eDP-1
+}
+
+unmonitor() {
+  xrandr \
+    --output HDMI-1 --off \
+    --output eDP-1 --auto --primary
+}
+
+# Minecraft launcher on the discrete GPU (PRIME offload)
+alias mc="env __NV_PRIME_RENDER_OFFLOAD=1 \
+    __GLX_VENDOR_LIBRARY_NAME=nvidia \
+    __VK_LAYER_NV_optimus=NVIDIA_only \
+    ModrinthApp"

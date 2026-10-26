@@ -1,0 +1,42 @@
+# Where each part of the repo lives on a machine. Read by install.sh and snapshot.sh.
+#
+#   <repo path>                         <live path>
+#
+# "@" in a repo path is replaced by the host name (hosts/desktop, hosts/laptop).
+# A trailing "/" means a directory: its files are merged into the live directory
+# (nothing in the live directory is deleted). Entries whose repo path doesn't
+# exist for a host are skipped, so host folders only hold what they need.
+
+# --- shells -------------------------------------------------------------------
+common/bash/.bashrc                     ~/.bashrc
+common/bash/.bash_configs               ~/.bash_configs
+hosts/@/bash/.bash_configs.host         ~/.bash_configs.host
+common/zsh/.zshrc                       ~/.zshrc
+common/zsh/.zprofile                    ~/.zprofile
+common/starship/starship.toml           ~/.config/starship.toml
+common/tmux/.tmux.conf                  ~/.tmux.conf
+
+# --- editors ------------------------------------------------------------------
+common/nvim/                            ~/.config/nvim/
+common/doom/                            ~/.config/doom/
+
+# --- terminals ----------------------------------------------------------------
+common/ghostty/config.ghostty           ~/.config/ghostty/config.ghostty
+hosts/@/ghostty/host.ghostty            ~/.config/ghostty/host.ghostty
+common/foot/foot.ini                    ~/.config/foot/foot.ini
+
+# --- Hyprland + 43PR desktop --------------------------------------------------
+common/hypr/                            ~/.config/hypr/
+hosts/@/hypr/                           ~/.config/hypr/
+common/quickshell/                      ~/.config/quickshell/
+hosts/@/quickshell/                     ~/.config/quickshell/
+common/43pr/                            ~/.config/43pr/
+common/matugen/                         ~/.config/matugen/
+common/rofi/config.rasi                 ~/.config/rofi/config.rasi
+common/gtk-3.0/                         ~/.config/gtk-3.0/
+common/gtk-4.0/                         ~/.config/gtk-4.0/
+
+# --- i3 (X11 fallback session) -------------------------------------------------
+hosts/@/i3/                             ~/.config/i3/
+hosts/@/i3blocks/                       ~/.config/i3blocks/
+hosts/@/screenlayout/                   ~/.screenlayout/
